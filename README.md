@@ -411,9 +411,9 @@ var sheet = j2c.scoped({
   bar:{margin:0}
 });
 
-console.log(sheet.bit);
+console.log(sheet.foo);
 // 'foo_j2c_371971407_1431849941805_0'
-console.log(sheet.bat);
+console.log(sheet.bar);
 //  'bar_j2c_371971407_1431849941805_1'
 
 // `sheet` is actually a String object, which can be used as a normal string.

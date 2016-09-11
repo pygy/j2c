@@ -50,7 +50,7 @@ The [home page](http://j2c.py.gy) has a few interactive demos.
 
 - [Installation](#installation)
 - [Usage](#usage)
-  - [For inline decalrations: `j2c.inline(declarations)`](#for-inline-decalrations-j2cinlinedeclarations)
+  - [For inline declarations: `j2c.inline(declarations)`](#for-inline-declarations-j2cinlinedeclarations)
     - [Arrays](#arrays)
       - [Overloading properties](#overloading-properties)
       - [Mixins](#mixins)
@@ -136,7 +136,7 @@ The `<style>{sheet}</style>` construct works in modernish browsers (ie9+). For o
 
 Animation names are also "localized" by default, font names are left untouched.
 
-### For inline decalrations: `j2c.inline(declarations)`
+### For inline declarations: `j2c.inline(declarations)`
 
 The `j2c` function takes in JS objects and builds a `property:value;` list out of it.
 
@@ -164,7 +164,7 @@ border-left-width: 1px;
 
 `CamelCase` and `_snake_case` names are turned into `-dash-case`, so that property names can be left unquoted in the source.
 
-Combine (sub)properties who share the same value using `$` as a separator. It is useful to specify vendor prefixes.
+Combine (sub)properties who share the same value use `$` as a separator. It is useful to specify vendor prefixes.
 
 #### Property ordering
 

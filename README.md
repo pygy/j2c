@@ -332,7 +332,7 @@ Here's a excerpt from the `j2c` port of the [PocketGrid](https://github.com/arna
 ```JavaScript
 j2c.sheet({"@global": {
   ".block,.blockgroup":{
-    ",:before,:after":{          // Notice the initial coma.
+    ",:before,:after":{          // Notice the initial comma.
       box_sizing:"border-box"
     }
   }

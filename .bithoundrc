@@ -1,6 +1,14 @@
 {
   "ignore": [
     "dist/*.js",
-    "example/*.js"
+    "example/*.js",
+    "plugins/postcss/dist/*.js",
+    "plugins/postcss/node_modules/**/*.js",
+    "plugins/prefix-browser/dist/*.js",
+    "plugins/prefix-browser/node_modules/**/*.js",
+    "plugins/prefix-browser/src/extracted/*.js",
+    "plugins/prefix-browser/upstream/**/*.js",
+    "plugins/prefix-iso/**/*.js",
+    "plugins/prefix-server/**/*.js"
   ]
 }

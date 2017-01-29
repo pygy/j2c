@@ -1,3 +1,7 @@
+# Warning, WIP: these docs haven't been updated to match the changes since v0.11
+
+See HISTORY.md for a high level overview of the differences.
+
 # j2c [![npm][npm_img]][npm_url] ![.min.gz][size_img]
 
 [![Join the chat at https://gitter.im/j2css/j2c][gitter_img]][gitter_url]
@@ -7,37 +11,12 @@
 [![bitHound Score][bithound_img]][bithound_url]
 [![downloads][monthly_img]][monthly_url]
 
-
-A lean, no hassle CSS in JS solution.
-
-Scales from standalone use to isomorphic apps. Compatible with any framework/view library.
-
-Supports building either inline styles of full style sheets.
-
-In `sheet` mode, `j2c` follows a [**'local by default'**](https://medium.com/seek-ui-engineering/the-end-of-global-css-90d2a4a06284) approach to make it easier to write components without having to worry about class and animation names clashes.
-
-Like SASS, LESS and Stylus, `j2c` supports:
-
-- mixins
-- `@extend`
-- nested selectors (in `sheet` mode)
-
-All standard CSS at-rules are available out of the box, most importantly:
-
-- `@media` and `@supports` can be nested anywhere in the sheet
-- `@keyframes` (with automatic generation of `@-webkit-keyframes`)
-- `@font-face`
-
-The [home page](http://j2c.py.gy) has a few interactive demos.
-
 [trav_img]: https://travis-ci.org/j2css/j2c.svg?branch=master
 [trav_url]: https://travis-ci.org/j2css/j2c
 [cov_img]: https://coveralls.io/repos/j2css/j2c/badge.svg?branch=master
 [cov_url]: https://coveralls.io/r/j2css/j2c?branch=master
 [npm_img]: https://img.shields.io/npm/v/j2c.svg
 [npm_url]: https://npmjs.com/package/j2c
-[monthly_url]: http://npm-stat.com/charts.html?package=j2c
-[monthly_img]: https://img.shields.io/npm/dm/j2c.svg
 [size_img]: https://badges.herokuapp.com/size/npm/j2c/dist/j2c.global.min.js.gz?label=.min.gz
 [deps_img]: https://david-dm.org/j2css/j2c.svg
 [deps_url]: https://david-dm.org/j2css/j2c
@@ -45,6 +24,65 @@ The [home page](http://j2c.py.gy) has a few interactive demos.
 [bithound_url]: https://www.bithound.io/github/j2css/j2c/
 [gitter_img]: https://badges.gitter.im/Join%20Chat.svg
 [gitter_url]: https://gitter.im/j2css/j2c
+
+
+A lean (2.2KB), no hassle CSS in JS solution.
+
+`j2c`:
+
+- supports all CSS features, and then some (most notably, local scope).
+- scales from standalone `<script src="j2c.global.js">` to isomorphic apps.
+- is compatible with any framework/view library. 
+- doesn't require any external tooling (`gulp`/`babel`/`browserify`/`webpack`).
+- Can be imported as an ES6 or CommonJS module, but also works in ES3 browsers (IE8-) with polyfills.
+
+### Why?
+
+For styling components, mostly. Especially if you plan to publish them standalone (your users won't have to worry about importing the style sheets, and you won't tie your lib to any build system).
+
+### Out of the box
+
+`j2c` supports building either inline styles of full style sheets (arbitrary CSS).
+
+In `sheet` mode, `j2c` follows a [**'local by default'**](https://medium.com/seek-ui-engineering/the-end-of-global-css-90d2a4a06284) approach to make it easier to write components without having to worry about class and animation names clashes.
+
+Like SASS, LESS and Stylus, `j2c` supports:
+
+- mixins
+- nested selectors and at-rules
+- `@composes`, an `@extends`-like mechanism inspired by @tivac's [Modular CSS]()
+
+All [standard CSS at-rules](https://developer.mozilla.org/en-US/docs/Web/CSS/At-rule) are available out of the box, most importantly:
+
+- `@media` and `@supports`, which can be nested anywhere in the sheet, SASS-style.
+- `@keyframes`
+- `@font-face`
+
+### With plugins
+
+- Automatic vendor prefix insertion + #%-@$-%$-@$ KB. (Client-side only at the moment)
+- color manipulation
+- lengths arithmetics
+- A bare bones grid system
+
+### Convert CSS to `j2c`...
+
+... with the [`j2c` importer](http://j2c.py.gy/import.html).
+
+The [home page](http://j2c.py.gy) has a few interactive demos.
+
+
+### `j2c` is mostly done.
+
+At this point, the core (this very repo) is considered feature complete and should not evolve much if at all. We will add new at-rules as they are standardized, and will fix any bugs that are reported.
+
+### Thanks
+
+Thanks to 
+
+- @barneycarroll for the inspiration and initial feedback.
+- @ArthurClemens, @StephanHoyer, @der-On, @llambda, @dontwork, @futurist and @mithriljs-cn for the support and feedback.
+- @tivac for `compose` which I stole from his [Modular CSS]() project.
 
 ## Table of Contents
 
@@ -58,7 +96,7 @@ The [home page](http://j2c.py.gy) has a few interactive demos.
   - [For building a style sheet: `j2c.sheet(rules)`](#for-building-a-style-sheet-j2csheetrules)
     - [Combining multiple selectors](#combining-multiple-selectors)
     - [At-rules](#at-rules)
-    - [Mixins and @extend](#mixins-and-extend)
+    - [Mixins and @composes](#mixins-and-composes)
     - [CSS Hacks](#css-hacks)
 - [Inserting a stylesheet in a document](#inserting-the-stylesheet-in-the-document)
 - [Isomorphic app support](#isomorphic-app-support)
@@ -383,43 +421,43 @@ becomes
 
 For `@keyframes` rules, a `@-webkit-keyframes` block is automatically created with auto-prefixed property names.
 
-#### Mixins and `@extend`
+#### Mixins and `@coposes`
 
-Mixins and `@extend` make `j2c` sheets composable. Both techniques can be combined.
+Mixins and `@composes` make `j2c` sheets composable. Both techniques can be combined.
 
 ##### Mixins and source objects composition
 
 For mixins, arrays works the same way at the selector level as they do at the property/value one. You can therefore use the [method described in the "inline" section](#mixins) to create mixins, that can return either at-rules, selectors, properties or a mix thereof.
 
-##### `@extend`
+##### `@composes`
 
-`j2c` also supports a SASS-like `@extend`, more powerful in some regards, but more limited in others.
+`j2c` also supports `@composes`, which works a bit like the SASS`@extend`, more powerful in some regards, but more limited in others.
 
 The limitation is that it can only deal with classes. Specifically:
 
 ```JS
-namespace = j2c.sheet({
-  '.red': {color: '#f00'}
-})
-
-sheet = j2c.sheet(namespace, {
+sheet = j2c.sheet({
+  '.red': {
+    color: '#f00'
+  },
   '.great': {
     fontSize: '3em'
   },
-  '.greatRed': {
-    '@extend': ['.great', '.red'] // you can also pass a single class
+  // `scarlet` here is the target of the composition, `great` and `red` are the sources.
+  '.scarlet': {
+    '@composes': ['.great', '.red'] // you can also pass a single class
   }
 })
 ```
 
-`sheet.greatRed` is now defined as `'great_j2c...  red_j2c...  greatRed_j2c...'` (class names truncated for readability).
+`sheet.scarlet` is now defined as `'great__j2c-xxx  red__j2c-xxx  scarlet__j2c-xxx'` (class names truncated for readability).
 
 The extra power comes from the fact that you can inherit from arbitrary classes, not just j2c-defined ones:
 
 ```JS
 sheet = j2c.sheet(namespace, {
   '.myButton': {
-    '@extend': ':global(.button)', // coming, say, form Bootstrap
+    '@composes': ':global(.button)', // coming, say, form Bootstrap
     color: theme.highlight
   }
 })
@@ -427,13 +465,9 @@ sheet = j2c.sheet(namespace, {
 
 Here, `sheet.myButton` is `'button  myButton_j2c...'`.
 
-While `@extend` can import from arbitrary classes, it only imports into local ones.
+While the `@composes` sources can be arbitrary classes, the target must be a local one. It will not work in global context.
 
-`@extend` works fine with nested selectors. If there are more than one class in a selector, `@extend` applies to the last (right-most) one.
-
-###### Invalid uses
-
-If the last or only selector is a `:global(.klass)`, in `@global` context, or in the absence of a class in the selector, `@extend` is turned into a `at-extend` property and inserted as-is in the sheet.
+`@composes` doesn't support nested selectors, and doesn't work in conditional at rules. Its target must lie at the first nesting level.
 
 #### CSS Hacks
 

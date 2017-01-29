@@ -1,0 +1,1 @@
+export {prefixPlugin} from './plugin.js'

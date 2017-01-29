@@ -1,0 +1,14 @@
+coverage
+dist
+example
+gh_pages
+modules
+plugins/postcss/dist
+plugins/postcss/node_modules
+plugins/prefix-browser/dist
+plugins/prefix-browser/node_modules
+plugins/prefix-browser/src/extracted
+plugins/prefix-browser/test-utils/exposed.js
+plugins/prefix-browser/upstream
+plugins/prefix-iso
+plugins/prefix-server
